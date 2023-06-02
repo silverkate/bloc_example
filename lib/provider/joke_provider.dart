@@ -1,0 +1,2 @@
+/// The provider.
+class CatProvider {}
