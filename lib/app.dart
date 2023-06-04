@@ -3,6 +3,7 @@ import 'package:bloc_example/pages/home/joke_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Main app widget.
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -14,6 +15,8 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+
+      /// Wrap the page with the bloc provider.
       home: BlocProvider(
         create: (_) => JokeBloc(),
         child: const JokePage(),

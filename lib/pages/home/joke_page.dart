@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Page that displays the joke and the punchline.
 class JokePage extends StatefulWidget {
   const JokePage({Key? key}) : super(key: key);
 
@@ -15,18 +16,25 @@ class JokePage extends StatefulWidget {
 }
 
 class _JokePageState extends State<JokePage> {
+  /// Indication if the punchline is shown.
   final _isPunchlineShown = ValueNotifier(false);
 
+  /// If the progress is shown.
   bool get isProgressState => context.read<JokeBloc>().state is ProgressState;
 
   @override
   void initState() {
     super.initState();
+
+    /// Get the initial joke.
     context.read<JokeBloc>().add(GetJokeEvent());
   }
 
   @override
   Widget build(BuildContext context) {
+    /// Listens to the error states (no need to perform rebuild).
+    ///
+    /// Performs rebuild to show the progress indication on the widgets.
     return BlocConsumer<JokeBloc, BaseState>(
       listenWhen: (context, state) {
         return state is ErrorState;
@@ -44,6 +52,7 @@ class _JokePageState extends State<JokePage> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
+                /// Joke setup card.
                 ExpandedCardWidget(
                   child: isProgressState
                       ? const CircularProgressIndicator()
@@ -55,6 +64,8 @@ class _JokePageState extends State<JokePage> {
                         ),
                 ),
                 const SizedBox(height: 12),
+
+                /// Joke punchline card.
                 ExpandedCardWidget(
                   onTap: () => _isPunchlineShown.value = true,
                   child: ValueListenableBuilder<bool>(
@@ -84,7 +95,7 @@ class _JokePageState extends State<JokePage> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: _generateFact,
+            onPressed: _getNewJoke,
             child: const Icon(Icons.refresh),
           ),
         );
@@ -92,11 +103,13 @@ class _JokePageState extends State<JokePage> {
     );
   }
 
-  void _generateFact() {
+  /// Gets a new joke.
+  void _getNewJoke() {
     _isPunchlineShown.value = false;
     context.read<JokeBloc>().add(GetJokeEvent());
   }
 
+  /// Handles the states without the page rebuild (errors).
   void _onAction(BuildContext context, BaseState state) {
     if (state is ErrorState) {
       showDialog(
