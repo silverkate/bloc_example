@@ -88,8 +88,6 @@ class _JokePageState extends State<JokePage> {
             child: const Icon(Icons.refresh),
           ),
         );
-
-        return const SizedBox();
       },
     );
   }
