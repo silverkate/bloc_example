@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Expanded card widget with the [onTap] callback.
 class ExpandedCardWidget extends StatelessWidget {
   const ExpandedCardWidget({
     required this.child,
