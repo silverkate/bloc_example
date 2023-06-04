@@ -6,8 +6,8 @@ import 'package:bloc_example/pages/home/bloc/joke_state.dart';
 import 'package:bloc_example/provider/joke_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CounterBloc extends Bloc<BaseEvent, BaseState> {
-  CounterBloc() : super(InitState()) {
+class JokeBloc extends Bloc<BaseEvent, BaseState> {
+  JokeBloc() : super(InitState()) {
     on<GetJokeEvent>((event, emit) => emit.streamAsync(_getJoke()));
   }
 
